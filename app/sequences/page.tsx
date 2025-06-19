@@ -94,11 +94,15 @@ export default async function SequencesPage() {
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center text-sm text-gray-600">
                       <Users className="h-4 w-4 mr-2" />
-                      <span>To: {sequence.metadata.prospect?.title || sequence.metadata.prospect}</span>
+                      <span>To: {typeof sequence.metadata.prospect === 'object' && sequence.metadata.prospect?.title 
+                        ? sequence.metadata.prospect.title 
+                        : sequence.metadata.prospect || 'Unknown Prospect'}</span>
                     </div>
                     <div className="flex items-center text-sm text-gray-600">
                       <User className="h-4 w-4 mr-2" />
-                      <span>From: {sequence.metadata.sender_profile?.title || sequence.metadata.sender_profile}</span>
+                      <span>From: {typeof sequence.metadata.sender_profile === 'object' && sequence.metadata.sender_profile?.title 
+                        ? sequence.metadata.sender_profile.title 
+                        : sequence.metadata.sender_profile || 'Unknown Sender'}</span>
                     </div>
                   </div>
 
