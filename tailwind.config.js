@@ -20,6 +20,19 @@ module.exports = {
           DEFAULT: '#64748b',
           foreground: '#ffffff'
         },
+        accent: {
+          DEFAULT: '#f1f5f9',
+          foreground: '#0f172a'
+        },
+        muted: {
+          DEFAULT: '#f8fafc',
+          foreground: '#64748b'
+        },
+        card: {
+          DEFAULT: '#ffffff',
+          foreground: '#0f172a'
+        },
+        ring: '#3b82f6',
         success: {
           DEFAULT: '#10b981',
           foreground: '#ffffff'
