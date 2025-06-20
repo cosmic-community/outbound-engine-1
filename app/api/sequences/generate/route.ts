@@ -5,6 +5,14 @@ import type { SequenceFormData, SenderProfile, Prospect } from '@/types'
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if OpenAI API key is available
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json(
+        { error: 'OpenAI API key is not configured' },
+        { status: 500 }
+      )
+    }
+
     const data: SequenceFormData = await request.json()
     
     // Validate required fields

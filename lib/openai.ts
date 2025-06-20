@@ -1,9 +1,18 @@
 import OpenAI from 'openai';
 import type { GeneratedEmail, SenderProfile, Prospect, EmailTone, EmailGoal } from '@/types';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Create OpenAI client instance only when needed
+function createOpenAIClient(): OpenAI {
+  const apiKey = process.env.OPENAI_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY environment variable is not configured');
+  }
+  
+  return new OpenAI({
+    apiKey,
+  });
+}
 
 export async function generateEmailSequence(
   senderProfile: SenderProfile,
@@ -59,6 +68,9 @@ Return the response as a JSON array where each email has this exact structure:
 Make sure the response is valid JSON that can be parsed directly.`;
 
   try {
+    // Create OpenAI client only when function is called
+    const openai = createOpenAIClient();
+    
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
