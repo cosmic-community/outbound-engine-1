@@ -43,28 +43,17 @@ export interface Prospect extends CosmicObject {
   };
 }
 
-// Email Template interface
+// Email Template interface - Fixed to match actual usage
 export interface EmailTemplate extends CosmicObject {
   type_slug: 'email-templates';
   metadata: {
     template_name: string;
-    template_category?: {
-      key: TemplateCategory;
-      value: string;
-    };
+    template_category?: string; // Changed from object to string
     subject_template: string;
     body_template: string;
-    variables?: {
-      variables: string[];
-    };
-    tone?: {
-      key: EmailTone;
-      value: string;
-    };
-    goal?: {
-      key: EmailGoal;
-      value: string;
-    };
+    variables?: string[]; // Changed structure to match usage
+    tone?: string; // Changed from object to string
+    goal?: string; // Changed from object to string
     active?: boolean;
   };
 }

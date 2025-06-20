@@ -114,7 +114,7 @@ function getDefaultTemplates(): EmailTemplate[] {
         <p>I noticed that {{prospect_company}} is focused on {{company_context}}, and I thought you might be interested in how we help companies like yours {{value_proposition}}.</p>
         <p>Would you be open to a brief 15-minute conversation to explore how this could benefit {{prospect_company}}?</p>
         <p>Best regards,<br>{{sender_name}}<br>{{sender_title}}<br>{{sender_company}}</p>`,
-      variables: {},
+      variables: [],
       tone: 'friendly',
       goal: 'introduce_product',
       active: true
@@ -137,7 +137,7 @@ function getDefaultTemplates(): EmailTemplate[] {
         <p>I understand you're likely busy, but I believe a quick conversation could be valuable for {{prospect_company}}.</p>
         <p>Would you have 15 minutes this {{suggested_timeframe}} for a brief call?</p>
         <p>Best,<br>{{sender_name}}</p>`,
-      variables: {},
+      variables: [],
       tone: 'friendly',
       goal: 'follow_up',
       active: true
@@ -160,7 +160,7 @@ function getDefaultTemplates(): EmailTemplate[] {
         <p>If you're not interested at this time, I completely understand. Feel free to reach out if anything changes in the future.</p>
         <p>Wishing you continued success at {{prospect_company}}.</p>
         <p>Best regards,<br>{{sender_name}}</p>`,
-      variables: {},
+      variables: [],
       tone: 'friendly',
       goal: 'follow_up',
       active: true
@@ -191,7 +191,8 @@ export async function generateEmailSequenceFromTemplates(
     for (let i = 0; i < emailCount; i++) {
       const template = templates[i % templates.length] // Cycle through templates if needed
       
-      if (template) {
+      // Add null check for template
+      if (template && template.metadata) {
         // Replace variables in subject and body
         const subject = replaceVariables(template.metadata.subject_template, variables)
         const body = replaceVariables(template.metadata.body_template, variables)
