@@ -93,11 +93,16 @@ async function getSuitableTemplates(tone: EmailTone, goal: EmailGoal, emailCount
 
 // Default templates as fallback
 function getDefaultTemplates(): EmailTemplate[] {
+  const currentDate = new Date().toISOString()
+  
   return [
     {
       id: 'default-1',
       title: 'Introduction Email',
       slug: 'default-introduction',
+      type_slug: 'email-templates',
+      created_at: currentDate,
+      modified_at: currentDate,
       metadata: {
         template_name: 'Default Introduction',
         template_category: 'introduction',
@@ -112,11 +117,14 @@ function getDefaultTemplates(): EmailTemplate[] {
         goal: 'introduce_product',
         active: true
       }
-    } as EmailTemplate,
+    },
     {
       id: 'default-2', 
       title: 'Follow Up Email',
       slug: 'default-followup',
+      type_slug: 'email-templates',
+      created_at: currentDate,
+      modified_at: currentDate,
       metadata: {
         template_name: 'Default Follow Up',
         template_category: 'follow_up',
@@ -131,11 +139,14 @@ function getDefaultTemplates(): EmailTemplate[] {
         goal: 'follow_up',
         active: true
       }
-    } as EmailTemplate,
+    },
     {
       id: 'default-3',
       title: 'Final Follow Up',
       slug: 'default-final',
+      type_slug: 'email-templates',
+      created_at: currentDate,
+      modified_at: currentDate,
       metadata: {
         template_name: 'Default Final Follow Up', 
         template_category: 'closing',
@@ -150,7 +161,7 @@ function getDefaultTemplates(): EmailTemplate[] {
         goal: 'follow_up',
         active: true
       }
-    } as EmailTemplate
+    }
   ]
 }
 
@@ -175,16 +186,18 @@ export async function generateEmailSequenceFromTemplates(
     for (let i = 0; i < emailCount; i++) {
       const template = templates[i % templates.length] // Cycle through templates if needed
       
-      // Replace variables in subject and body
-      const subject = replaceVariables(template.metadata.subject_template, variables)
-      const body = replaceVariables(template.metadata.body_template, variables)
-      
-      emails.push({
-        step_number: i + 1,
-        subject_line: subject,
-        email_body: body,
-        send_delay_days: i * frequencyDays
-      })
+      if (template) {
+        // Replace variables in subject and body
+        const subject = replaceVariables(template.metadata.subject_template, variables)
+        const body = replaceVariables(template.metadata.body_template, variables)
+        
+        emails.push({
+          step_number: i + 1,
+          subject_line: subject,
+          email_body: body,
+          send_delay_days: i * frequencyDays
+        })
+      }
     }
     
     return emails

@@ -73,7 +73,7 @@ export default function NewEmailTemplatePage() {
 
   const extractVariables = (text: string): string[] => {
     const matches = text.match(/\{\{[^}]+\}\}/g)
-    return matches ? [...new Set(matches)] : []
+    return matches ? Array.from(new Set(matches)) : []
   }
 
   const handleTemplateChange = (field: 'subject_template' | 'body_template', value: string) => {
@@ -84,7 +84,7 @@ export default function NewEmailTemplatePage() {
         ...extractVariables(updated.subject_template),
         ...extractVariables(updated.body_template)
       ]
-      updated.variables = [...new Set(allVariables)]
+      updated.variables = Array.from(new Set(allVariables))
       return updated
     })
   }
@@ -227,7 +227,7 @@ export default function NewEmailTemplatePage() {
                       className="input w-full"
                     />
                     <p className="text-xs text-gray-500 mt-1">
-                      Use {{variable_name}} for dynamic content
+                      Use {`{{variable_name}}`} for dynamic content
                     </p>
                   </div>
 
@@ -243,7 +243,7 @@ export default function NewEmailTemplatePage() {
                       rows={12}
                       value={formData.body_template}
                       onChange={(e) => handleTemplateChange('body_template', e.target.value)}
-                      placeholder="<p>Hi {{prospect_name}},</p>
+                      placeholder={`<p>Hi {{prospect_name}},</p>
 
 <p>I hope this email finds you well. I'm {{sender_name}}, {{sender_title}} at {{sender_company}}.</p>
 
@@ -254,11 +254,11 @@ export default function NewEmailTemplatePage() {
 <p>Best regards,<br>
 {{sender_name}}<br>
 {{sender_title}}<br>
-{{sender_company}}</p>"
+{{sender_company}}</p>`}
                       className="textarea w-full font-mono text-sm"
                     />
                     <p className="text-xs text-gray-500 mt-1">
-                      HTML formatting supported. Use {{variable_name}} for dynamic content.
+                      HTML formatting supported. Use {`{{variable_name}}`} for dynamic content.
                     </p>
                   </div>
 
