@@ -73,7 +73,7 @@ export default function NewEmailTemplatePage() {
 
   const extractVariables = (text: string): string[] => {
     const matches = text.match(/\{\{[^}]+\}\}/g)
-    return matches ? Array.from(new Set(matches)) : []
+    return matches ? [...new Set(matches)] : []
   }
 
   const handleTemplateChange = (field: 'subject_template' | 'body_template', value: string) => {
@@ -84,7 +84,7 @@ export default function NewEmailTemplatePage() {
         ...extractVariables(updated.subject_template),
         ...extractVariables(updated.body_template)
       ]
-      updated.variables = Array.from(new Set(allVariables))
+      updated.variables = [...new Set(allVariables)]
       return updated
     })
   }
@@ -324,9 +324,9 @@ export default function NewEmailTemplatePage() {
                       Variables ({formData.variables.length})
                     </h4>
                     <div className="space-y-1">
-                      {formData.variables.map((variable, index) => (
+                      {formData.variables.map((variableName, index) => (
                         <div key={index} className="text-xs bg-gray-100 px-2 py-1 rounded font-mono">
-                          {variable}
+                          {variableName}
                         </div>
                       ))}
                     </div>

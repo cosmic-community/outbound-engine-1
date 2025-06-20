@@ -68,11 +68,14 @@ async function getSuitableTemplates(tone: EmailTone, goal: EmailGoal, emailCount
     const allTemplates = response.objects as EmailTemplate[]
 
     // Filter templates by tone and goal if available
-    let suitableTemplates = allTemplates.filter(template => 
-      template.metadata.active && 
-      (template.metadata.tone === tone || !template.metadata.tone) &&
-      (template.metadata.goal === goal || !template.metadata.goal)
-    )
+    let suitableTemplates = allTemplates.filter(template => {
+      const templateTone = template.metadata.tone
+      const templateGoal = template.metadata.goal
+      
+      return template.metadata.active && 
+        (templateTone === tone || !templateTone) &&
+        (templateGoal === goal || !templateGoal)
+    })
 
     // If no matching templates, use all active templates
     if (suitableTemplates.length === 0) {
@@ -95,74 +98,76 @@ async function getSuitableTemplates(tone: EmailTone, goal: EmailGoal, emailCount
 function getDefaultTemplates(): EmailTemplate[] {
   const currentDate = new Date().toISOString()
   
-  return [
-    {
-      id: 'default-1',
-      title: 'Introduction Email',
-      slug: 'default-introduction',
-      type_slug: 'email-templates',
-      created_at: currentDate,
-      modified_at: currentDate,
-      metadata: {
-        template_name: 'Default Introduction',
-        template_category: 'introduction',
-        subject_template: 'Quick question about {{prospect_company}}',
-        body_template: `<p>Hi {{prospect_name}},</p>
-          <p>I hope this email finds you well. I'm {{sender_name}}, {{sender_title}} at {{sender_company}}.</p>
-          <p>I noticed that {{prospect_company}} is focused on {{company_context}}, and I thought you might be interested in how we help companies like yours {{value_proposition}}.</p>
-          <p>Would you be open to a brief 15-minute conversation to explore how this could benefit {{prospect_company}}?</p>
-          <p>Best regards,<br>{{sender_name}}<br>{{sender_title}}<br>{{sender_company}}</p>`,
-        variables: {},
-        tone: 'friendly',
-        goal: 'introduce_product',
-        active: true
-      }
-    },
-    {
-      id: 'default-2', 
-      title: 'Follow Up Email',
-      slug: 'default-followup',
-      type_slug: 'email-templates',
-      created_at: currentDate,
-      modified_at: currentDate,
-      metadata: {
-        template_name: 'Default Follow Up',
-        template_category: 'follow_up',
-        subject_template: 'Following up on {{prospect_company}}',
-        body_template: `<p>Hi {{prospect_name}},</p>
-          <p>I wanted to follow up on my previous email about helping {{prospect_company}} {{value_proposition}}.</p>
-          <p>I understand you're likely busy, but I believe a quick conversation could be valuable for {{prospect_company}}.</p>
-          <p>Would you have 15 minutes this {{suggested_timeframe}} for a brief call?</p>
-          <p>Best,<br>{{sender_name}}</p>`,
-        variables: {},
-        tone: 'friendly',
-        goal: 'follow_up',
-        active: true
-      }
-    },
-    {
-      id: 'default-3',
-      title: 'Final Follow Up',
-      slug: 'default-final',
-      type_slug: 'email-templates',
-      created_at: currentDate,
-      modified_at: currentDate,
-      metadata: {
-        template_name: 'Default Final Follow Up', 
-        template_category: 'closing',
-        subject_template: 'Last follow up - {{prospect_company}}',
-        body_template: `<p>Hi {{prospect_name}},</p>
-          <p>This will be my final follow up regarding how {{sender_company}} can help {{prospect_company}} {{value_proposition}}.</p>
-          <p>If you're not interested at this time, I completely understand. Feel free to reach out if anything changes in the future.</p>
-          <p>Wishing you continued success at {{prospect_company}}.</p>
-          <p>Best regards,<br>{{sender_name}}</p>`,
-        variables: {},
-        tone: 'friendly',
-        goal: 'follow_up',
-        active: true
-      }
+  const defaultTemplate1: EmailTemplate = {
+    id: 'default-1',
+    title: 'Introduction Email',
+    slug: 'default-introduction',
+    type_slug: 'email-templates',
+    created_at: currentDate,
+    modified_at: currentDate,
+    metadata: {
+      template_name: 'Default Introduction',
+      template_category: 'introduction',
+      subject_template: 'Quick question about {{prospect_company}}',
+      body_template: `<p>Hi {{prospect_name}},</p>
+        <p>I hope this email finds you well. I'm {{sender_name}}, {{sender_title}} at {{sender_company}}.</p>
+        <p>I noticed that {{prospect_company}} is focused on {{company_context}}, and I thought you might be interested in how we help companies like yours {{value_proposition}}.</p>
+        <p>Would you be open to a brief 15-minute conversation to explore how this could benefit {{prospect_company}}?</p>
+        <p>Best regards,<br>{{sender_name}}<br>{{sender_title}}<br>{{sender_company}}</p>`,
+      variables: {},
+      tone: 'friendly',
+      goal: 'introduce_product',
+      active: true
     }
-  ]
+  }
+
+  const defaultTemplate2: EmailTemplate = {
+    id: 'default-2', 
+    title: 'Follow Up Email',
+    slug: 'default-followup',
+    type_slug: 'email-templates',
+    created_at: currentDate,
+    modified_at: currentDate,
+    metadata: {
+      template_name: 'Default Follow Up',
+      template_category: 'follow_up',
+      subject_template: 'Following up on {{prospect_company}}',
+      body_template: `<p>Hi {{prospect_name}},</p>
+        <p>I wanted to follow up on my previous email about helping {{prospect_company}} {{value_proposition}}.</p>
+        <p>I understand you're likely busy, but I believe a quick conversation could be valuable for {{prospect_company}}.</p>
+        <p>Would you have 15 minutes this {{suggested_timeframe}} for a brief call?</p>
+        <p>Best,<br>{{sender_name}}</p>`,
+      variables: {},
+      tone: 'friendly',
+      goal: 'follow_up',
+      active: true
+    }
+  }
+
+  const defaultTemplate3: EmailTemplate = {
+    id: 'default-3',
+    title: 'Final Follow Up',
+    slug: 'default-final',
+    type_slug: 'email-templates',
+    created_at: currentDate,
+    modified_at: currentDate,
+    metadata: {
+      template_name: 'Default Final Follow Up', 
+      template_category: 'closing',
+      subject_template: 'Last follow up - {{prospect_company}}',
+      body_template: `<p>Hi {{prospect_name}},</p>
+        <p>This will be my final follow up regarding how {{sender_company}} can help {{prospect_company}} {{value_proposition}}.</p>
+        <p>If you're not interested at this time, I completely understand. Feel free to reach out if anything changes in the future.</p>
+        <p>Wishing you continued success at {{prospect_company}}.</p>
+        <p>Best regards,<br>{{sender_name}}</p>`,
+      variables: {},
+      tone: 'friendly',
+      goal: 'follow_up',
+      active: true
+    }
+  }
+  
+  return [defaultTemplate1, defaultTemplate2, defaultTemplate3]
 }
 
 export async function generateEmailSequenceFromTemplates(
