@@ -84,7 +84,7 @@ export default function NewSequencePage() {
               ← Back to Sequences
             </Link>
             <h1 className="text-3xl font-bold text-gray-900">Create Email Sequence</h1>
-            <p className="text-gray-600 mt-1">Generate AI-powered email sequences for your prospects</p>
+            <p className="text-gray-600 mt-1">Generate personalized email sequences using your templates</p>
           </div>
         </div>
       </header>
@@ -100,7 +100,7 @@ export default function NewSequencePage() {
               <div>
                 <h2 className="card-title">Sequence Configuration</h2>
                 <p className="card-description">
-                  Configure your email sequence preferences and let AI generate personalized emails
+                  Configure your email sequence preferences and generate personalized emails from your templates
                 </p>
               </div>
             </div>
@@ -263,6 +263,14 @@ export default function NewSequencePage() {
                 </div>
               )}
 
+              {/* Template Info */}
+              <div className="bg-green-50 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-green-900 mb-2">Template-Based Generation</h3>
+                <p className="text-sm text-green-700">
+                  Emails will be generated using your existing email templates with personalized content based on your prospect and sender information.
+                </p>
+              </div>
+
               {/* Submit Button */}
               <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
                 <Link 
@@ -281,7 +289,7 @@ export default function NewSequencePage() {
                   ) : (
                     <Zap className="h-4 w-4 mr-2" />
                   )}
-                  {isLoading ? 'Generating...' : 'Generate with AI'}
+                  {isLoading ? 'Generating...' : 'Generate Sequence'}
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </button>
               </div>

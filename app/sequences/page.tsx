@@ -36,7 +36,7 @@ export default async function SequencesPage() {
                 ← Back to Dashboard
               </Link>
               <h1 className="text-3xl font-bold text-gray-900">Email Sequences</h1>
-              <p className="text-gray-600 mt-1">Manage your AI-generated email campaigns</p>
+              <p className="text-gray-600 mt-1">Manage your template-based email campaigns</p>
             </div>
             <Link 
               href="/sequences/new"
@@ -56,7 +56,7 @@ export default async function SequencesPage() {
             <Mail className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No email sequences yet</h3>
             <p className="text-gray-600 mb-6">
-              Create your first AI-powered email sequence to start reaching out to prospects.
+              Create your first template-based email sequence to start reaching out to prospects.
             </p>
             <Link 
               href="/sequences/new"
